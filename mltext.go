@@ -3,11 +3,11 @@
 package mltext
 
 import (
-	"regexp"
-	"io"
-	"strings"
-	"code.google.com/p/go.net/html/atom"
 	"code.google.com/p/go.net/html"
+	"code.google.com/p/go.net/html/atom"
+	"io"
+	"regexp"
+	"strings"
 )
 
 // Reads in the html given in the input reader, then attempts to convert it
@@ -24,13 +24,13 @@ func ToText(htmlReader io.Reader) (text string, err error) {
 func textOfNode(node *html.Node, isBoxBoundary bool) (text string) {
 	if node.Type == html.ElementNode {
 		switch node.DataAtom {
-			case atom.P, atom.Div, atom.Li:
-				if !isBoxBoundary {
-					text += "\n"
-					isBoxBoundary = true
-				}
-			case atom.Br:
+		case atom.P, atom.Div, atom.Li:
+			if !isBoxBoundary {
 				text += "\n"
+				isBoxBoundary = true
+			}
+		case atom.Br:
+			text += "\n"
 		}
 	} else if node.Type == html.TextNode {
 		if len(strings.TrimSpace(node.Data)) > 0 {
